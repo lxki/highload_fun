@@ -228,7 +228,7 @@ where
 fn parse(s: &[u8]) -> u64 {
     unsafe {
         let shuffle_masks = simd256::gen_shuffle_masks();
-        parse_multithreading::<4, _>(s, |s| simd256::parse(s, &shuffle_masks))
+        parse_multithreading::<8, _>(s, |s| simd256::parse(s, &shuffle_masks))
     }
 }
 
