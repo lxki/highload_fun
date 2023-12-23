@@ -216,7 +216,9 @@ where
     let chunks = split::<THREAD_COUNT>(s);
     let mut res = 0;
     thread::scope(|scope| {
-        let threads = chunks.map(|c| scope.spawn(|| parse(c)));
+        let threads = chunks.iter().skip(1).map(|c| scope.spawn(|| parse(c)));
+        res = parse(chunks[0]);
+
         for t in threads {
             res += t.join().unwrap();
         }
